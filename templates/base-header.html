@@ -1,0 +1,28 @@
+			<!-- Header -->
+				<div id="header-wrapper">
+					<header id="header" class="container">
+
+							<div id="logo">
+								<h1 style="background:#5A8F38;"><a href="/">Recipo</a></h1>
+								<span>by dimnoll</span>
+							</div>
+
+							<nav id="nav">
+								<ul>
+									<li class="{% if nav == 'home' %}current{% endif %}">
+										<a href="/">Welcome</a>
+									</li>
+									<li class="{% if nav == 'recipes' %}current{% endif %}">
+										<a href="/recipes">Recipes</a>
+									</li>
+									<li class="{% if nav == 'search' %}current{% endif %}">
+										<a href="/search">Search</a>
+									</li>
+									<li class="{% if nav == 'about' %}current{% endif %}">
+										<a href="/about">About</a>
+									</li>
+								</ul>
+							</nav>
+
+					</header>
+				</div>

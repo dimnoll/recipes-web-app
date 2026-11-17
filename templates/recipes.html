@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Recipes | Recipo{% endblock %}
+
+{% block css_link %}
+		<link rel="stylesheet" href="/static/css/pagination.css" />
+{% endblock %}
+
+{% block body_class %}is-preload homepage{% endblock %}
+
+{% block content %}
+
+				<div class="container">
+					<div class="row" style="display: flex;justify-content: center;">
+						<div class="pagination-wrapper" style="margin-top:0em; text-align:center;">
+							{{ pagination.links | safe }}
+						</div>
+					</div>
+				</div>
+
+			<!-- Features -->
+				<div id="features-wrapper">
+					<div class="container">
+						<div class="row">
+
+							{% for recipe in recipes %}
+
+								<div class="col-4 col-12-medium">
+										<section class="box feature">
+											<a href="/recipes/{{ recipe.id }}" class="image featured">
+												<img src="/static/img/recipes/{{ recipe.localImage | urlencode }}" alt="" onerror="this.onerror=null; this.src='{{ recipe.image }}';" />
+											</a>
+											<div class="inner" style="padding:1.5em 2em 0.5em 2em;min-height:170px">
+												<header>
+													<h2>{{ recipe.name }}</h2>
+													<p>by <a href="{{ recipe.authorUrl }}">{{ recipe.authorName }}</a></p>
+												</header>
+												<p></p>
+											</div>
+										</section>
+								</div>
+
+							{% endfor %}
+
+						</div>
+					</div>
+				</div>
+
+				<div class="container">
+					<div class="row" style="display: flex;justify-content: center;">
+						<div class="pagination-wrapper" style="margin-top:0em; text-align:center;">
+							{{ pagination.links | safe }}
+						</div>
+					</div>
+				</div>
+
+{% endblock %}

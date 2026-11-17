@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Search | Recipo{% endblock %}
+
+{% block body_class %}is-preload homepage{% endblock %}
+
+{% block content %}
+
+				<script src="/static/js/fuse.js"></script>
+				<script>
+					const recipesData = {{ recipesJson | safe }};
+				</script>
+
+			<!-- Banner -->
+				<div id="banner-wrapper">
+					<div id="banner" class="box container" style="padding:0.5em;">
+						<div class="row">
+							<div class="col-8 col-12-medium">
+								<input type="text" id="searchInput" placeholder="Search recipes..." style="width:100%;height:85%;margin-bottom: 0.5em;font-size: 16pt;" />
+							</div>
+							<style>.responsive-padding {padding-left: 0px;}@media (max-width: 767px) {.responsive-padding {padding: 0 0 0 0.8em; }}</style>
+							<div class="col-2 col-12-medium responsive-padding" id="searchBtn">
+								<ul style="margin-left: 0.5em;">
+									<li><a href="#" class="button medium icon solid" style="font-size: 20pt;text-align:center;">Search</a></li>
+								</ul>
+							</div>
+							<div class="col-2 col-12-medium responsive-padding" id="clearBtn">
+								<ul style="margin-left: 0.5em;">
+									<li><a href="#" class="button alt medium icon solid" style="font-size: 20pt;text-align:center;">Clear</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<!-- Features -->
+				<div id="features-wrapper">
+					<div class="container">
+						<div class="row" id="recipesContainer">
+						</div>
+					</div>
+				</div>
+
+				<script>
+					const options = {
+						keys: ["name"],
+						threshold: 0.4,
+					};
+
+					const fuse = new Fuse(recipesData, options);
+					const input = document.getElementById("searchInput");
+					const container = document.getElementById("recipesContainer");
+
+					function performSearch() {
+						const query = input.value.trim();
+						if (query === "") {
+							container.innerHTML = "";
+						} else {
+							const results = fuse.search(query).map(r => r.item);
+							renderRecipes(results);
+						}
+					}
+
+					function renderRecipes(recipes) {
+						container.innerHTML = "";
+						if (recipes.length === 0) return;
+
+						for (const r of recipes) {
+							const card = document.createElement("div");
+							card.className = "col-4 col-12-medium";
+							card.innerHTML = `
+										<section class="box feature">
+											<a href="/recipes/${ r.id }" class="image featured">
+												<img src="/static/img/recipes/${ encodeURIComponent(r.local_image) }" alt="" onerror="this.onerror=null; this.src='${ r.image }';" />
+											</a>
+											<div class="inner" style="padding:1.5em 2em 0.5em 2em;min-height:170px">
+												<header>
+													<h2>${ r.name }</h2>
+													<p>by <a href="${ r.author_url }">${ r.author_name }</a></p>
+												</header>
+												<p></p>
+											</div>
+										</section>
+							`;
+							container.appendChild(card);
+						}
+					}
+
+					input.addEventListener("input", performSearch);
+					document.getElementById("searchBtn").addEventListener("click", (e) => {
+						e.preventDefault();
+						performSearch();
+					});
+					document.getElementById("clearBtn").addEventListener("click", (e) => {
+						e.preventDefault();
+						input.value = "";
+						container.innerHTML = "";
+					});
+				</script>
+
+{% endblock %}

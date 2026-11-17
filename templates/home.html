@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}Home | Recipo{% endblock %}
+
+{% block body_class %}is-preload homepage{% endblock %}
+
+{% block content %}
+
+			<!-- Banner -->
+				<div id="banner-wrapper">
+					<div id="banner" class="box container" style="background-image:url(/static/img/bg01.png); background-position:center;background-size:100% auto;">
+						<div class="row">
+							<div class="col-8 col-12-medium">
+								<h2 style="color:white;">Hi. This is Recipo.</h2>
+								<p><strong style="color:white;">It's an open-source responsive site for various recipes</strong></p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<!-- Features -->
+				<div id="features-wrapper">
+					<div class="container">
+						<div class="row">
+
+							{% for recipe in featured %}
+
+								<div class="col-4 col-12-medium">
+										<section class="box feature">
+											<a href="/recipes/{{ recipe.id }}" class="image featured">
+												<img src="/static/img/recipes/{{ recipe.localImage | urlencode }}" alt="" onerror="this.onerror=null; this.src='{{ recipe.image }}';" />
+											</a>
+											<div class="inner" style="padding:1.5em 2em 0.5em 2em;min-height:170px">
+												<header>
+													<h2>{{ recipe.name }}</h2>
+													<p>by <a href="{{ recipe.authorUrl }}">{{ recipe.authorName }}</a></p>
+												</header>
+												<p></p>
+											</div>
+										</section>
+								</div>
+
+							{% endfor %}
+
+						</div>
+					</div>
+				</div>
+
+			<!-- Main -->
+				<div id="main-wrapper">
+					<div class="container">
+						<div class="row gtr-200">
+							<div class="col-4 col-12-medium">
+									<div id="sidebar">
+										<section class="widget thumbnails">
+											<h3>What You Might Like</h3>
+											<div class="grid">
+												<div class="row gtr-50">
+
+													{% for recipe in thumbs %}
+
+														<div class="col-6">
+															<a href="/recipes/{{ recipe.id }}" class="image fit">
+																<img src="/static/img/recipes/{{ recipe.localImage | urlencode }}" alt="" onerror="this.onerror=null; this.src='{{ recipe.image }}';" />
+															</a>
+														</div>
+
+													{% endfor %}
+
+												</div>
+											</div>
+											<a href="/recipes" class="button icon fa-file-alt">More</a>
+										</section>
+									</div>
+							</div>
+							<div class="col-8 col-12-medium imp-medium">
+									<div id="content">
+										<section class="last">
+											<h2>Discover the Magic of Food</h2>
+											<p>Food is more than just a means of survival; it's a celebration of culture, tradition, and creativity. Across the globe, food brings people together, creating experiences that transcend borders and language. From the comforting aroma of freshly baked bread to the bold flavors of spices from distant lands, each dish tells a story. Food is an art form, an expression of who we are, where we come from, and where we are going.</p>
+
+											<h2>A Journey Through Culinary Cultures</h2>
+											<p>Every cuisine is a rich tapestry of history, innovation, and passion. Whether it's the intricate techniques of French cooking, the vibrant colors and flavors of Indian curries, or the simplicity of Italian pasta, each culture offers a unique take on what it means to nourish both body and soul. Food bridges generations, connects communities, and invites us to explore the world from the comfort of our kitchens.</p>
+										</section>
+									</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+{% endblock %}
